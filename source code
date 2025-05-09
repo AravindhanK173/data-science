@@ -1,0 +1,442 @@
+# Import necessary libraries
+import pandas as pd
+
+# Upload the file (for Google Colab, use files.upload())
+from google.colab import files
+uploaded = files.upload()
+
+# Load the dataset
+df = pd.read_csv('Churn_Modelling.csv')
+
+# Display the first few rows of the dataset
+df.head()
+import pandas as pd
+
+# Load the dataset
+df = pd.read_csv('Churn_Modelling.csv')
+
+# Show the first few rows
+df.head()
+import pandas as pd
+
+# Load the dataset
+df = pd.read_csv('Churn_Modelling.csv')
+
+# Check for missing values
+missing_values = df.isnull().sum()
+print("Missing Values:\n", missing_values[missing_values > 0])
+
+# Check for duplicate rows
+duplicate_rows = df.duplicated().sum()
+print("\nNumber of duplicate rows:", duplicate_rows)
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Set style
+sns.set(style="whitegrid")
+
+# Target variable: Exited
+sns.countplot(x='Exited', data=df)
+plt.title('Customer Churn Distribution')
+plt.xlabel('Exited (0 = No, 1 = Yes)')
+plt.ylabel('Count')
+plt.show()
+import pandas as pd
+
+# Load the dataset
+df = pd.read_csv('Churn_Modelling.csv')
+
+# Print column names
+print("All Columns:\n", df.columns.tolist())
+
+# Drop identifier columns and extract features (X) and target (y)
+X = df.drop(['RowNumber', 'CustomerId', 'Surname', 'Exited'], axis=1)
+y = df['Exited']
+
+# Show the first 5 rows of features
+print("\nFeatures (X):")
+print(X.head())
+
+# Show the first 5 values of the target
+print("\nTarget (y):")
+print(y.head())
+import pandas as pd
+
+# Load the dataset
+df = pd.read_csv('Churn_Modelling.csv')
+
+# Drop unnecessary columns
+df = df.drop(['RowNumber', 'CustomerId', 'Surname'], axis=1)
+
+# Label encode Gender (binary category)
+df['Gender'] = df['Gender'].map({'Female': 0, 'Male': 1})
+
+# One-hot encode Geography (multiclass category)
+df = pd.get_dummies(df, columns=['Geography'], drop_first=True)
+
+# Show the transformed dataframe
+print(df.head())
+import pandas as pd
+
+# Load the dataset
+df = pd.read_csv('Churn_Modelling.csv')
+
+# Drop identifier columns that won't be used
+df = df.drop(['RowNumber', 'CustomerId', 'Surname'], axis=1)
+
+# One-hot encode 'Geography' and 'Gender'
+df_encoded = pd.get_dummies(df, columns=['Geography', 'Gender'], drop_first=True)
+
+# Display the first few rows
+print(df_encoded.head())
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+# Load the dataset
+df = pd.read_csv('Churn_Modelling.csv')
+
+# Drop identifier columns and target variable
+df = df.drop(['RowNumber', 'CustomerId', 'Surname'], axis=1)
+
+# One-hot encode categorical features (Geography, Gender)
+df_encoded = pd.get_dummies(df, columns=['Geography', 'Gender'], drop_first=True)
+
+# Separate features (X) and target (y)
+X = df_encoded.drop('Exited', axis=1)  # Features
+y = df_encoded['Exited']  # Target variable
+
+# Split the data into training and testing sets (80% training, 20% testing)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Output the size of training and testing sets
+print("Training set size:", X_train.shape)
+print("Testing set size:", X_test.shape)
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
+# Load and preprocess the dataset (same steps as before)
+df = pd.read_csv('Churn_Modelling.csv')
+df = df.drop(['RowNumber', 'CustomerId', 'Surname'], axis=1)
+df_encoded = pd.get_dummies(df, columns=['Geography', 'Gender'], drop_first=True)
+X = df_encoded.drop('Exited', axis=1)
+y = df_encoded['Exited']
+
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize Logistic Regression model
+model = LogisticRegression(max_iter=1000)
+
+# Train the model
+model.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred = model.predict(X_test)
+
+# Evaluate the model
+accuracy = accuracy_score(y_test, y_pred)
+conf_matrix = confusion_matrix(y_test, y_pred)
+class_report = classification_report(y_test, y_pred)
+
+# Output the results
+print("Accuracy:", accuracy)
+print("\nConfusion Matrix:\n", conf_matrix)
+print("\nClassification Report:\n", class_report)
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+
+# Load and preprocess the dataset (same steps as before)
+df = pd.read_csv('Churn_Modelling.csv')
+df = df.drop(['RowNumber', 'CustomerId', 'Surname'], axis=1)
+df_encoded = pd.get_dummies(df, columns=['Geography', 'Gender'], drop_first=True)
+X = df_encoded.drop('Exited', axis=1)
+y = df_encoded['Exited']
+
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize Logistic Regression model
+model = LogisticRegression(max_iter=1000)
+
+# Train the model
+model.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred = model.predict(X_test)
+
+# Evaluate the model
+accuracy = accuracy_score(y_test, y_pred)
+conf_matrix = confusion_matrix(y_test, y_pred)
+class_report = classification_report(y_test, y_pred)
+
+# Output the results
+print("Accuracy:", accuracy)
+print("\nConfusion Matrix:\n", conf_matrix)
+print("\nClassification Report:\n", class_report)
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split # Importing the missing module
+
+
+# Load and preprocess the dataset (same steps as before)
+df = pd.read_csv('Churn_Modelling.csv')
+df = df.drop(['RowNumber', 'CustomerId', 'Surname'], axis=1)
+df_encoded = pd.get_dummies(df, columns=['Geography', 'Gender'], drop_first=True)
+X = df_encoded.drop('Exited', axis=1)
+y = df_encoded['Exited']
+
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize and train the Logistic Regression model
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train, y_train)
+
+# New customer data with 'Geography' and 'Gender'
+new_data = pd.DataFrame({
+    'CreditScore': [650],
+    'Age': [35],
+    'Tenure': [3],
+    'Balance': [20000],
+    'NumOfProducts': [2],
+    'HasCrCard': [1],
+    'IsActiveMember': [1],
+    'EstimatedSalary': [85000],
+    'Geography': ['France'],  # Adding Geography
+    'Gender': ['Male']       # Adding Gender
+})
+
+# One-hot encode the new data (same process as during training)
+new_data_encoded = pd.get_dummies(new_data, columns=['Geography', 'Gender'], drop_first=True)
+
+# Ensure the new data has the same columns as the training data
+new_data_encoded = new_data_encoded.reindex(columns=X.columns, fill_value=0)
+
+# Make a prediction
+prediction = model.predict(new_data_encoded)
+
+# Output the prediction
+print("Prediction (0 = No churn, 1 = Churn):", prediction[0])
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+
+# Load and preprocess the dataset (same steps as before)
+df = pd.read_csv('Churn_Modelling.csv')
+df = df.drop(['RowNumber', 'CustomerId', 'Surname'], axis=1)
+df_encoded = pd.get_dummies(df, columns=['Geography', 'Gender'], drop_first=True)
+X = df_encoded.drop('Exited', axis=1)
+y = df_encoded['Exited']
+
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize and train the Logistic Regression model
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train, y_train)
+
+# New customer data as a DataFrame
+new_data = pd.DataFrame({
+    'CreditScore': [650],
+    'Age': [35],
+    'Tenure': [3],
+    'Balance': [20000],
+    'NumOfProducts': [2],
+    'HasCrCard': [1],
+    'IsActiveMember': [1],
+    'EstimatedSalary': [85000],
+    'Geography': ['Spain'],
+    'Gender': ['Male']
+})
+
+# One-hot encode the categorical features (Geography and Gender)
+new_data_encoded = pd.get_dummies(new_data, columns=['Geography', 'Gender'], drop_first=True)
+
+# Ensure the new data has the same columns as the training data
+new_data_encoded = new_data_encoded.reindex(columns=X.columns, fill_value=0)
+
+# Make a prediction
+prediction = model.predict(new_data_encoded)
+
+# Add the prediction to the DataFrame
+new_data['Predicted_Exited'] = prediction
+
+# Output the DataFrame with prediction
+print(new_data)
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Load the dataset (example) - 
+df = pd.read_csv('Churn_Modelling.csv') 
+
+# Preprocessing
+# Assuming we have columns: 'CreditScore', 'Age', 'Tenure', 'Exited'
+
+# Feature columns and target
+X = df[['CreditScore', 'Age', 'Tenure']]  # Features
+y = df['Exited']  # Target variable
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize and train the Linear Regression model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predict on the test set
+y_pred = model.predict(X_test)
+
+# Evaluate the model
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+# Output results
+print(f"Mean Squared Error (MSE): {mse}")
+print(f"R-squared (R²): {r2}")
+
+# Predict for a new customer
+new_customer_data = pd.DataFrame({
+    'CreditScore': [650],  
+    'Age': [35],  
+    'Tenure': [3]  
+})
+
+# Make the prediction
+prediction = model.predict(new_customer_data)
+
+# Output the prediction
+print(f"Predicted Exited (0 = No, 1 = Yes): {prediction[0]}") 
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+
+# Sample dataset to train the model (replace with your actual dataset or pre-trained model)
+df = pd.DataFrame({
+    'Hours of Study': [5, 10, 15, 20],
+    'Class Attendance': [1, 1, 0, 1],
+    'Previous Grades': [70, 80, 75, 90],
+    'Final Grade': [75, 85, 80, 95]
+})
+
+# Preprocessing: Encode class attendance
+# Replace values not in the dictionary with a default value (e.g., 0 for 'Irregular')
+df['Class Attendance'] = df['Class Attendance'].map({'Regular': 1, 'Irregular': 0}).fillna(0) 
+
+# Feature columns and target
+X = df[['Hours of Study', 'Class Attendance', 'Previous Grades']]
+y = df['Final Grade']
+
+# Train the model (you can replace this with a pre-trained model)
+model = LinearRegression()
+model.fit(X, y)
+
+# Define the prediction function
+def predict_final_grade(hours_of_study, class_attendance, previous_grades):
+    """
+    Predict the final grade based on the input features.
+    
+    Args:
+    - hours_of_study: (int or float) Hours spent studying
+    - class_attendance: (str) 'Regular' or 'Irregular'
+    - previous_grades: (int or float) Previous grades of the student
+    
+    Returns:
+    - predicted_grade: (float) The predicted final grade
+    """
+    # Encode the class attendance input
+    class_attendance = 1 if class_attendance == 'Regular' else 0
+    
+    # Prepare the input data as a DataFrame
+    input_data = pd.DataFrame({
+        'Hours of Study': [hours_of_study],
+        'Class Attendance': [class_attendance],
+        'Previous Grades': [previous_grades]
+    })
+    
+    # Make the prediction
+    predicted_grade = model.predict(input_data)
+    
+    return predicted_grade[0]  # Return the predicted grade
+
+# Example usage:
+predicted_grade = predict_final_grade(10, 'Regular', 80)
+print(f"Predicted Final Grade: {predicted_grade:.2f}")
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+
+# Split the data into training and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train the model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Evaluate the model
+score = model.score(X_test, y_test)
+print(f"Model Accuracy: {score * 100:.2f}%")
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+import gradio as gr
+
+# Sample dataset for training (Replace with your own dataset if needed)
+data = {
+    'Hours of Study': [5, 10, 15, 20, 25],
+    'Class Attendance': [1, 1, 0, 1, 1],  # 1 = Regular, 0 = Irregular
+    'Previous Grades': [70, 80, 75, 85, 90],
+    'Final Grade': [75, 85, 80, 95, 90]
+}
+
+# Convert to DataFrame
+df = pd.DataFrame(data)
+
+# Features (X) and target (y)
+X = df[['Hours of Study', 'Class Attendance', 'Previous Grades']]
+y = df['Final Grade']
+
+# Split the data into training and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train the model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Evaluate the model
+score = model.score(X_test, y_test)
+print(f"Model Accuracy: {score * 100:.2f}%")
+
+# Define the prediction function
+def predict_final_grade(hours_of_study, class_attendance, previous_grades):
+    # Encode the class attendance input
+    class_attendance = 1 if class_attendance == 'Regular' else 0
+    
+    # Prepare the input data as a DataFrame
+    input_data = pd.DataFrame({
+        'Hours of Study': [hours_of_study],
+        'Class Attendance': [class_attendance],
+        'Previous Grades': [previous_grades]
+    })
+    
+    # Make the prediction
+    predicted_grade = model.predict(input_data)
+    
+    return f"Predicted Final Grade: {predicted_grade[0]:.2f}"
+
+# Create the Gradio interface
+# Updated to use gr.Textbox directly for outputs
+inputs = [
+    gr.Slider(0, 24, value=10, label="Hours of Study"),  # Use 'value' instead of 'default'
+    gr.Radio(choices=["Regular", "Irregular"], label="Class Attendance"), 
+    gr.Slider(0, 100, value=75, label="Previous Grades")  # Use 'value' instead of 'default'
+]
+
+# Define the output component directly in gr.Interface
+outputs = gr.Textbox(label="Predicted Final Grade")  # Remove gr.outputs.
+
+# Launch the Gradio interface
+gr.Interface(fn=predict_final_grade, inputs=inputs, outputs=outputs, live=True).launch()
